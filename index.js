@@ -36,6 +36,8 @@ bot.onText(/\/name (.*)/, (msg, match) => {
 });
 
 bot.onText(/\/allnames (.*)/, (msg, match) => {
+     const chatId = msg.chat.id;
+     const resp = match[1];
      MongoClient.connect(url, function(err, db) {
           assert.equal(null, err);
           var collection = db.collection('names');
