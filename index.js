@@ -41,8 +41,10 @@ bot.onText(/\/allnames (.*)/, (msg, match) => {
      MongoClient.connect(url, function(err, db) {
           assert.equal(null, err);
           var collection = db.collection('names');
-          var names = collection.find({chatId: chatId});
-          bot.sendMessage(chatId, names);
+          collection.find({}).toArray(function(err, result) {
+               if (err) throw err;
+               bot.sendMessage(chatId, result);
           db.close();
+          });
      });
 });
