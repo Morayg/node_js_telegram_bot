@@ -29,7 +29,17 @@ bot.onText(/\/name (.*)/, (msg, match) => {
      MongoClient.connect(url, function(err, db) {
           assert.equal(null, err);
           var collection = db.collection('names');
-          collection.insert({chatId: resp});
+          collection.insert({name: resp, chatId: chatId});
+          db.close();
+     });
+});
+
+bot.onText(/\/allnames (.*)/, (msg, match) => {
+     MongoClient.connect(url, function(err, db) {
+          assert.equal(null, err);
+          var collection = db.collection('names');
+          var names = collection.find();
+          bot.sendMessage(chatId, names);
           db.close();
      });
 });
