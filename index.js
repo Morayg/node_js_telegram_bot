@@ -30,9 +30,9 @@ bot.onText(/\/name (.*)/, (msg, match) => {
           assert.equal(null, err);
           var collection = db.collection('names');
           collection.insert({name: resp, chatId: chatId});
+          bot.sendMessage(chatId, 'Привет, ' + resp + '!');
           db.close();
      });
-     bot.sendMessage(chatId, 'Привет, ' + resp + '!');
 });
 
 bot.onText(/\/allnames (.*)/, (msg, match) => {
