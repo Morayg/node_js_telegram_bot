@@ -1,4 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+var url = 'mongodb://localhost:27017/telegram_bot_first'
 
 // replace the value below with the Telegram token you receive from @BotFather
 const token = '295872714:AAHB2IW8lFl4iU3rHkcqrxype4nftcGAHQY';
@@ -19,3 +22,14 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
   bot.sendMessage(chatId, resp);
   bot.sendMessage(chatId, chatId);
 });
+
+bot.onText(/\/name (.*)/, (msg, match) => {
+     const chatId = msg.chat.id;
+     const resp = match[1];
+     MongoClient.connect(url, function(err, db) {
+          assert.equal(null, err);
+          var collection = db.collection('names');
+          collection.insert({chatId: resp});
+          db.close();
+     };
+};
