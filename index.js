@@ -28,4 +28,4 @@ bot.on('message', (msg) => {
   bot.sendMessage(chatId, 'Received your message');
 });
 
-//тест деплоя 5
+//тест деплоя 6
