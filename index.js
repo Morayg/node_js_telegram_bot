@@ -45,7 +45,7 @@ bot.onText(/\/allnames (.*)/, (msg, match) => {
                if (err) throw err;
                for (var i = 0; i < result.length; i++) {
                bot.sendMessage(chatId, result[i].toString);
-               //console.log(result);
+               console.log(result[i].toString);
                };
           db.close();
           });
