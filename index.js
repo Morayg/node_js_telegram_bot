@@ -32,6 +32,7 @@ bot.onText(/\/name (.*)/, (msg, match) => {
           collection.insert({name: resp, chatId: chatId});
           db.close();
      });
+     bot.sendMessage(chatId, 'Привет, ' + resp + '!');
 });
 
 bot.onText(/\/allnames (.*)/, (msg, match) => {
