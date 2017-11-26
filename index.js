@@ -31,5 +31,5 @@ bot.onText(/\/name (.*)/, (msg, match) => {
           var collection = db.collection('names');
           collection.insert({chatId: resp});
           db.close();
-     };
-};
+     });
+});
