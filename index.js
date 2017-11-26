@@ -15,8 +15,8 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
   // 'match' is the result of executing the regexp above on the text content
   // of the message
 
-  const chatId = msg.chat.id;
-  const resp = match[1]; // the captured "whatever"
+  var chatId = msg.chat.id;
+  var resp = match[1]; // the captured "whatever"
 
   // send back the matched "whatever" to the chat
   bot.sendMessage(chatId, resp);
@@ -24,8 +24,8 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
 });
 
 bot.onText(/\/name (.*)/, (msg, match) => {
-     const chatId = msg.chat.id;
-     const resp = match[1];
+     var chatId = msg.chat.id;
+     var resp = match[1];
      MongoClient.connect(url, function(err, db) {
           assert.equal(null, err);
           var collection = db.collection('names');
@@ -36,12 +36,12 @@ bot.onText(/\/name (.*)/, (msg, match) => {
 });
 
 bot.onText(/\/allnames (.*)/, (msg, match) => {
-     const chatId = msg.chat.id;
-     const resp = match[1];
+     var chatId = msg.chat.id;
+     var resp = match[1];
      MongoClient.connect(url, function(err, db) {
           assert.equal(null, err);
           var collection = db.collection('names');
-          var names = collection.find({chatID: chatID});
+          var names = collection.find({chatId: chatId});
           bot.sendMessage(chatId, names);
           db.close();
      });
