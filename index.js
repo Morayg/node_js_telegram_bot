@@ -44,6 +44,7 @@ bot.onText(/\/allnames (.*)/, (msg, match) => {
           collection.find({}).toArray(function(err, result) {
                if (err) throw err;
                bot.sendMessage(chatId, result);
+               console.log(result);
           db.close();
           });
      });
