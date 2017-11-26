@@ -17,4 +17,5 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
 
   // send back the matched "whatever" to the chat
   bot.sendMessage(chatId, resp);
+  bot.sendMessage(chatId, chatId);
 });
