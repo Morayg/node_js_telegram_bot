@@ -20,7 +20,7 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
 
   // send back the matched "whatever" to the chat
   bot.sendMessage(chatId, resp);
-  bot.sendMessage(chatId, chatId);
+  //bot.sendMessage(chatId, chatId);
 });
 
 bot.onText(/\/name (.*)/, (msg, match) => {
@@ -50,5 +50,16 @@ bot.onText(/\/allnames/, (msg, match) => {
                };
           db.close();
           });
+     });
+});
+
+bot.onText(/\/find (.*)/, (msg, match) => {
+     var chatId = msg.chat.id;
+     var resp = match[1];
+     MongoClient.connect(url, function(err, db) {
+          assert.equal(null, err);
+          var collection = db.collection('names');
+          bot.sendMessage(chatId, collection.findOne({name: resp}));
+          db.close();
      });
 });
