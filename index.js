@@ -35,7 +35,7 @@ bot.onText(/\/name (.*)/, (msg, match) => {
      });
 });
 
-bot.onText(/\/allnames (.*)/, (msg, match) => {
+bot.onText(/\/allnames/, (msg, match) => {
      var chatId = msg.chat.id;
      var resp = match[1];
      MongoClient.connect(url, function(err, db) {
