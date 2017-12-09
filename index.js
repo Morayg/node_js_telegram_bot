@@ -4,7 +4,7 @@ var assert = require('assert');
 var url = 'mongodb://localhost:27017/telegram_bot_first'
 
 // replace the value below with the Telegram token you receive from @BotFather
-const token = '483920782:AAFjR-Wnq5zQmFJYhpQqRm06Ri9rXJAibfA';
+const token = '428346731:AAG02e5MXsewWGMraXDKDJJlSGoyJOhXYzc';
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {polling: true});
@@ -62,7 +62,7 @@ bot.onText(/\/find (.*)/, (msg, match) => {
           var collection = db.collection('names');
           var answer = collection.findOne({name: resp}, function(err, result) {
             if (err) throw err;
-            bot.sendMessage(chatId, result);
+            bot.sendMessage(chatId, result['name']);
             db.close();
           });
      });
