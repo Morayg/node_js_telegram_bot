@@ -52,7 +52,7 @@ bot.onText(/\/allnames/, (msg, match) => {
           });
      });
 });
-
+/*
 bot.onText(/\/find (.*)/, (msg, match) => {
      var chatId = msg.chat.id;
      var resp = match[1];
