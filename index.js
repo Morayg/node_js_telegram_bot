@@ -57,6 +57,7 @@ bot.onText(/\/find (.*)/, (msg, match) => {
      var chatId = msg.chat.id;
      var resp = match[1];
      MongoClient.connect(url, function(err, db) {
+          if (err) throw err;
           assert.equal(null, err);
           var collection = db.collection('names');
           var answer = collection.findOne({name: resp});
