@@ -1,7 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
-var url = 'mongodb://localhost:27017/telegram_bot_first'
+var url = 'mongodb://localhost:27017/tb1'
 
 // replace the value below with the Telegram token you receive from @BotFather
 const token = '428346731:AAG02e5MXsewWGMraXDKDJJlSGoyJOhXYzc';
