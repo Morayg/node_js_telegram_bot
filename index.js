@@ -65,3 +65,4 @@ bot.onText(/\/find (.*)/, (msg, match) => {
           db.close();
      });
 });
+*/
