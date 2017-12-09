@@ -52,7 +52,7 @@ bot.onText(/\/allnames/, (msg, match) => {
           });
      });
 });
-/*
+
 bot.onText(/\/find (.*)/, (msg, match) => {
      var chatId = msg.chat.id;
      var resp = match[1];
@@ -60,9 +60,10 @@ bot.onText(/\/find (.*)/, (msg, match) => {
           if (err) throw err;
           assert.equal(null, err);
           var collection = db.collection('names');
-          var answer = collection.findOne({name: resp});
+          var answer = collection.findOne({}, {
+            name: resp
+          });
           bot.sendMessage(chatId, answer);
           db.close();
      });
 });
-*/
