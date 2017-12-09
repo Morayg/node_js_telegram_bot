@@ -67,3 +67,18 @@ bot.onText(/\/find (.*)/, (msg, match) => {
           });
      });
 });
+
+bot.onText(/\/delete (.*)/, (msg, match) => {
+     var chatId = msg.chat.id;
+     var resp = match[1];
+     MongoClient.connect(url, function(err, db) {
+          if (err) throw err;
+          assert.equal(null, err);
+          var collection = db.collection('names');
+          var answer = collection.deleteOne({name: resp}, function(err, result) {
+            if (err) throw err;
+            bot.sendMessage(chatId, 'delete:' + result['name'] + ' - ' + result['chatId']);
+            db.close();
+          });
+     });
+});
