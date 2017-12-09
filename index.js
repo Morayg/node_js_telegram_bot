@@ -60,10 +60,10 @@ bot.onText(/\/find (.*)/, (msg, match) => {
           if (err) throw err;
           assert.equal(null, err);
           var collection = db.collection('names');
-          var answer = collection.findOne({}, {
-            name: resp
+          var answer = collection.findOne({name: resp}, function(err, result) {
+            if (err) throw err;
+            bot.sendMessage(chatId, result);
+            db.close();
           });
-          bot.sendMessage(chatId, answer);
-          db.close();
      });
 });
