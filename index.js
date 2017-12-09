@@ -62,7 +62,7 @@ bot.onText(/\/find (.*)/, (msg, match) => {
           var collection = db.collection('names');
           var answer = collection.findOne({name: resp}, function(err, result) {
             if (err) throw err;
-            bot.sendMessage(chatId, result['name']);
+            bot.sendMessage(chatId, result[i]['name'] + ' - ' + result[i]['chatId']);
             db.close();
           });
      });
