@@ -92,6 +92,9 @@ bot.onText(/\/check_attribute (.*)/, (msg, match) => {
         if (typeof(msg[i]) == 'object') {
           for (u in msg[i]) {
             bot.sendMessage(chatId, i + ' ' + u + ' ' + msg[i][u]);
+              for (a in msg[i][u]) {
+                bot.sendMessage(chatId, i + ' ' + u + ' ' + a + ' ' + msg[i][u][a]);
+              };
           };
         };    
      };
