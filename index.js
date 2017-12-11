@@ -82,3 +82,13 @@ bot.onText(/\/delete (.*)/, (msg, match) => {
           });
      });
 });
+
+
+bot.onText(/\/check_attribute (.*)/, (msg, match) => {
+     var chatId = msg.chat.id;
+     var resp = match[1];
+     for (i in msg) {
+      bot.sendMessage(i + ' ' + msg[i])
+        (typeof(msg.i) == 'object') ? for (u in msg[i]) {bot.sendMessage(i + ' ' + u + ' ' + msg[i][u])} : u = u;
+     }
+});
