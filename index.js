@@ -89,6 +89,10 @@ bot.onText(/\/check_attribute (.*)/, (msg, match) => {
      var resp = match[1];
      for (i in msg) {
       bot.sendMessage(chatId, i + ' ' + msg[i])
-        (typeof(msg[i]) == 'object') ? for (u in msg[i]) {bot.sendMessage(chatId, i + ' ' + u + ' ' + msg[i][u])} : u = u;
+        if (typeof(msg[i]) == 'object') {
+          for (u in msg[i]) {
+            bot.sendMessage(chatId, i + ' ' + u + ' ' + msg[i][u]);
+          };
+        };    
      };
 });
