@@ -96,3 +96,5 @@ bot.onText(/\/check_attribute (.*)/, (msg, match) => {
         };    
      };
 });
+
+test1
