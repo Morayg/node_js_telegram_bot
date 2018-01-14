@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mongodb": "^2.2.33",
+    "mongodb": "^2.2.34",
     "node-telegram-bot-api": "^0.29.0"
   }
 }
