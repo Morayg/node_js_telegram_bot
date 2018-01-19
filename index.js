@@ -46,7 +46,7 @@ bot.onText(/Просмотреть все заметки/, (msg, match) => {
 	MongoClient.connect(url, (err, db) => {
 		assert.equal(null, err);
 		var collection = db.collection('notes');
-		collection.find({user_id: user_id}).toArray(function(err,result) {
+		collection.find({user_id: user_id, note_edited_date: { "$exists" : false }}).toArray(function(err,result) {
 			if (err) throw err;
 			for (i = 0; i < result.length; i++) {
 				bot.sendMessage(chat_id, result[i]['note_body']);
@@ -68,16 +68,17 @@ bot.onText(/Перейти к просмотру заметок/, (msg, match) =
 		MongoClient.connect(url, (err, db) => {
 			assert.equal(null, err);
 			var collection = db.collection('notes');
-			collection.find({user_id: user_id}).limit(10).skip(skipdecade).toArray(function(err,result) {
+			collection.find({user_id: user_id, note_edited_date: { "$exists" : false }}).limit(10).skip(skipdecade).toArray(function(err,result) {
 				result_value = result.length;
 				if (err) throw err;
-				bot.sendMessage(chat_id, ('Ваши заметки с ' + (skipdecade + 1) + ' по ' + (skipdecade + result_value) + ': '),{reply_markup: {keyboard: [['/next', '/previous']]}});
+				var text_message = 'Ваши заметки с ' + (skipdecade + 1) + ' по ' + (skipdecade + result_value) + ': ';
+				bot.sendMessage(chat_id, text_message, {reply_markup: {keyboard: [['/next', '/previous']]}});
 				listener_pagenator();
 				for (i = 0; i < result.length; i++) {
 					var keyboard = {
 						reply_markup: JSON.stringify({
 						  	inline_keyboard: [
-								  [{text: "Изменить текст заметки", callback_data: 'edit_note' + ';;' + result[i]['_id']}]
+								  [{text: "Изменить текст заметки", callback_data: 'edit_note' + ';;' + result[i]['_id']}, {text: "Отправить заметку в архив", callback_data: 'archive_note' + ';;' + result[i]['_id']}]
 							]
 						})
 					};
@@ -129,7 +130,7 @@ bot.on('callback_query', function (msg) {
 							MongoClient.connect(url, function(err, db) {
 								assert.equal(null, err);
 								var collection = db.collection('notes');
-								collection.update({_id:  id_note}, {user_id: user_id, chat_id: chat_id, note_edited_date: note_edited_date, note_body: note_body});
+								collection.update({_id:  id_note}, {$set: {user_id: user_id, chat_id: chat_id, note_edited_date: note_edited_date, note_body: note_body} });
 								bot.sendMessage(chat_id, 'Заметка отредактирована!');
 								db.close();
 							});
@@ -141,4 +142,29 @@ bot.on('callback_query', function (msg) {
 			console.log(err);
 		};
 	};
+	if (callback_type == 'archive_note') {
+		try {
+			MongoClient.connect(url, (err, db) => {
+				assert.equal(null, err);
+				var collection = db.collection('notes');
+					collection.findOne({_id: id_note}, function(err, message) {
+						//console.log(message);
+						var chat_id = message.chat_id;
+						var chat_id = msg.chat.id;
+						var user_id = msg.from.id;
+						var note_edited_date = msg.date;
+						var note_body = msg.text;
+						MongoClient.connect(url, function(err, db) {
+							assert.equal(null, err);
+							var collection = db.collection('notes');
+							collection.update({_id:  id_note}, {chat_id: chat_id, archive_timestamp: Date.now()})
+							bot.sendMessage(chat_id, 'Заметка отправлена в архив!');
+							db.close();
+						});
+					});
+			});
+		} catch (err) {
+			console.log(err);
+		};
+	}
 });
