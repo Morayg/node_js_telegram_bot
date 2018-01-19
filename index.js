@@ -10,7 +10,19 @@ const token = '489189460:AAEfNRAinVtaxR4_VYoe3x6sxIfJMcY-mlY';
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {polling: true});
 
-bot.onText(/\/addnote/, (msg, match) => {
+function send_main_menu (chat_id) {
+	var main_menu_keyboard = {reply_markup: {keyboard: [
+		['Добавить заметку', 'Просмотреть все заметки', 'Перейти к просмотру заметок'], ['/settings', '/profile', '/archive']
+	], one_time_keyboard: true}};
+	bot.sendMessage(chat_id, 'Добро пожаловать в главное меню!', main_menu_keyboard)
+};
+
+bot.onText(/\/start/, (msg, match) => {
+	var chat_id = msg.chat.id;
+	send_main_menu(chat_id);
+});
+
+bot.onText(/Добавить заметку/, (msg, match) => {
 	bot.sendMessage(msg.chat.id, 'Что необходимо записать в заметку? Отправьте текст заметки');
 	bot.onText(all_value, (msg, match) => {
 		var chat_id = msg.chat.id;
@@ -28,8 +40,7 @@ bot.onText(/\/addnote/, (msg, match) => {
 	});
 });
 
-
-bot.onText(/\/showallmenotes/, (msg, match) => {
+bot.onText(/Просмотреть все заметки/, (msg, match) => {
 	var chat_id = msg.chat.id;
 	var user_id = msg.from.id;
 	MongoClient.connect(url, (err, db) => {
@@ -44,7 +55,7 @@ bot.onText(/\/showallmenotes/, (msg, match) => {
 	});
 });
 
-bot.onText(/\/show10menotes/, (msg, match) => {
+bot.onText(/Перейти к просмотру заметок/, (msg, match) => {
 	var skipdecade = 0;
 	var next_notes = /\/next/;
 	var previous_notes = /\/previous/;
