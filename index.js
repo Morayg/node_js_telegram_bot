@@ -5,6 +5,7 @@ var assert = require('assert');
 var url = 'mongodb://localhost:27017/tb1';
 var all_value = /./;
 
+
 // replace the value below with the Telegram token you receive from @BotFather
 const token = '489189460:AAEfNRAinVtaxR4_VYoe3x6sxIfJMcY-mlY';
 // Create a bot that uses 'polling' to fetch new updates
